@@ -14,7 +14,8 @@ import './styles/index.less'
 // 加载动态设置 REM 基准值 // npm i amfe-flexible
 import 'amfe-flexible'
 
-// 用于将 px 单位转化为 rem 单位 // npm install postcss-pxtorem -D
+// 用于将 px 单位转化为 rem 单位 // npm i postcss-pxtorem@5.1.1 -D
+
 
 // 注册使用 Vant 组件库
 Vue.use(Vant)

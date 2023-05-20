@@ -12,7 +12,7 @@
       <van-cell title="单元格" value="内容" label="描述信息" />
     </van-cell-group>
     <!-- 注意：仅行内样式设置 px 无法转换成rem -->
-    <div class="box" style="padding: 20px;">Hello World</div>
+    <div class="box">Hello World</div>
   </div>
 </template>
 <script>
@@ -22,8 +22,8 @@ export default {
 </script>
 <style lang="less">
 .box {
-  width: 200px;
-  height: 100px;
+  width: 375px;
+  height: 64px;
   background-color: pink;
 }
 </style>

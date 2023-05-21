@@ -5,11 +5,33 @@
     <!--/ 导航栏 -->
 
     <!-- 登录表单 -->
+    <!--
+      表单验证:
+        1. 给 van-field 组件配置 rules 验证规则
+          参考文档：https://vant-contrib.gitee.io/vant/v2/#/zh-CN/form#rule-shu-ju-jie-gou
+        2. 当表单提交的时候会自动触发表单验证
+          如果验证通过，会触发 submit 事件
+          如果验证失败，不会触发 submit
+    -->
     <van-form @submit="onSubmit">
-      <van-field v-model="user.mobile" name="手机号" placeholder="请输入手机号">
+      <van-field
+        v-model="user.mobile"
+        name="手机号"
+        placeholder="请输入手机号"
+        :rules="userFormRules.moabile"
+        type="number"
+        maxlength="11"
+      >
         <i slot="left-icon" class="toutiao toutiao-shouji"></i>
       </van-field>
-      <van-field v-model="user.code" name="验证码" placeholder="请输入验证">
+      <van-field
+        v-model="user.code"
+        name="验证码"
+        placeholder="请输入验证"
+        :rules="userFormRules.code"
+        type="number"
+        maxlength="6"
+      >
         <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
         <template #button>
           <div class="send-wrap">
@@ -39,6 +61,22 @@ export default {
       user: {
         mobile: '13911111111', // 手机号
         code: '246810' // 验证码
+      },
+      userFormRules: {
+        moabile: [
+          { required: true, message: '手机号不能为空' },
+          {
+            pattern: /^1[3|5|7|8]\d{9}$/,
+            message: '手机号格式错误'
+          }
+        ],
+        code: [
+          { required: true, message: '验证码不能为空' },
+          {
+            pattern: /^\d{6}$/,
+            message: '验证码格式错误'
+          }
+        ]
       }
     }
   },

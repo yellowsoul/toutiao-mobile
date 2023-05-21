@@ -6,28 +6,24 @@
 
     <!-- 登录表单 -->
     <van-form @submit="onSubmit">
-      <van-field
-        left-icon="smile-o"
-        name="手机号"
-        placeholder="请输入手机号"
-      >
+      <van-field v-model="user.mobile" name="手机号" placeholder="请输入手机号">
         <i slot="left-icon" class="toutiao toutiao-shouji"></i>
       </van-field>
-      <van-field
-        type="password"
-        name="验证码"
-        placeholder="请输入验证"
-      >
+      <van-field v-model="user.code" name="验证码" placeholder="请输入验证">
         <i slot="left-icon" class="toutiao toutiao-yanzhengma"></i>
         <template #button>
           <div class="send-wrap">
             <i class="send-line"></i>
-            <van-button class="send-sms-btn" round size="small" type="default">发送验证码</van-button>
+            <van-button class="send-sms-btn" round size="small" type="default"
+              >发送验证码</van-button
+            >
           </div>
         </template>
       </van-field>
       <div class="login-btn-wrap">
-        <van-button class="login-btn" block type="info" native-type="submit">登录</van-button>
+        <van-button class="login-btn" block type="info" native-type="submit"
+          >登录</van-button
+        >
       </div>
     </van-form>
     <!--/ 登录表单 -->
@@ -35,15 +31,37 @@
 </template>
 
 <script>
+import { login } from '@/api/user'
 export default {
   name: 'LoginIndex',
   data() {
     return {
+      user: {
+        mobile: '', // 手机号
+        code: '' // 验证码
+      }
     }
   },
   methods: {
-    onSubmit(values) {
-      console.log('submit', values)
+    async onSubmit() {
+      // 1. 获取表单数据
+      const user = this.user
+      // TODO: 2. 表单验证
+
+      // 3. 提交表单请求登录
+      try {
+        const res = await login(user)
+        console.log('登录成功', res)
+      } catch (err) {
+        if (err.response.status === 400) {
+          console.log('手机号或验证码错误')
+        } else {
+          console.log('登录失败，请稍后重试', err)
+        }
+        console.log('登录失败', err)
+      }
+
+      // 4. 根据请求响应结果处理后续操作
     }
   }
 }
@@ -51,29 +69,29 @@ export default {
 
 <style lang="less" scoped>
 .login-container {
-  .toutiao{
-    font-size:38px;
+  .toutiao {
+    font-size: 38px;
   }
-  .send-wrap{
+  .send-wrap {
     display: flex;
     align-items: center;
   }
-  .send-line{
+  .send-line {
     display: inline-block;
-    width:1px;
-    height:40px;
-    background-color:#ededed;
-    margin:0 20px;
-  }
-  .send-sms-btn{
+    width: 1px;
+    height: 40px;
     background-color: #ededed;
-    height:46px;
-    line-height: 46px;
-    font-size:22px;
+    margin: 0 20px;
   }
-  .login-btn-wrap{
+  .send-sms-btn {
+    background-color: #ededed;
+    height: 46px;
+    line-height: 46px;
+    font-size: 22px;
+  }
+  .login-btn-wrap {
     padding: 53px 33px;
-    .login-btn{
+    .login-btn {
       background-color: #6db4fb;
       border: none;
     }

@@ -2,17 +2,6 @@
   <div id="app">
     <!-- 路由的出口 -->
     <router-view />
-    <h1>黑马头条</h1>
-    <div>
-      <i class="toutiao toutiao-shipin"></i>
-    </div>
-    <van-button type="primary">主要按钮</van-button>
-    <van-cell-group>
-      <van-cell title="单元格" value="内容" />
-      <van-cell title="单元格" value="内容" label="描述信息" />
-    </van-cell-group>
-    <!-- 注意：仅行内样式设置 px 无法转换成rem -->
-    <div class="box">Hello World</div>
   </div>
 </template>
 <script>
@@ -20,10 +9,4 @@ export default {
   name: 'App'
 }
 </script>
-<style lang="less">
-.box {
-  width: 375px;
-  height: 64px;
-  background-color: pink;
-}
-</style>
+<style lang="less"></style>

@@ -36,7 +36,15 @@
         <template #button>
           <div class="send-wrap">
             <i class="send-line"></i>
+            <!-- 合计时时间 -->
+            <van-count-down
+              v-if="isCountDownShow"
+              :time="1000 * 5"
+              format="ss s"
+              @finish="isCountDownShow = false"
+            />
             <van-button
+              v-else
               class="send-sms-btn"
               round
               size="small"
@@ -83,7 +91,8 @@ export default {
             message: '验证码格式错误'
           }
         ]
-      }
+      },
+      isCountDownShow: false // 是否展示倒计时
     }
   },
   methods: {
@@ -124,7 +133,7 @@ export default {
       }
 
       // 2. 验证通过，显示倒计时
-
+      this.isCountDownShow = true
       // 3. 请求发送验证码
     }
   }

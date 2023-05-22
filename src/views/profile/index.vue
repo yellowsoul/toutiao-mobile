@@ -61,7 +61,13 @@
 
     <van-cell title="消息通知" is-link></van-cell>
     <van-cell class="mb-9" title="小智同学" is-link></van-cell>
-    <van-cell v-if="user" class="logout-cell" title="退出登录"></van-cell>
+    <van-cell
+      v-if="user"
+      class="logout-cell"
+      clickable
+      title="退出登录"
+      @click="onLogout"
+    ></van-cell>
   </div>
 </template>
 
@@ -76,12 +82,32 @@ export default {
   computed: {
     ...mapState(['user'])
   },
-  methods: {}
+  methods: {
+    onLogout() {
+      // 退出提示
+      // 在组件中需要使用 this.$dialog 来调用弹框组件
+      this.$dialog
+        .confirm({
+          title: '确认退出吗'
+        })
+        .then(() => {
+          // on confirm
+          // 确认退出:清除登录状态(vuex容器中的 user + 本地存储的 user)
+          this.$store.commit('setUser', null)
+        })
+        .catch(() => {
+          // on cancel
+          console.log('取消')
+        })
+    }
+  }
 }
 </script>
 
 <style scoped lang="less">
-.mb-9{margin-bottom: 9px;}
+.mb-9 {
+  margin-bottom: 9px;
+}
 .profile-container {
   .header {
     height: 360px;

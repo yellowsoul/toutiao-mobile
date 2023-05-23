@@ -32,7 +32,11 @@
         :title="channel.name"
         v-for="channel in channels"
         :key="channel.id"
-        >{{ channel.name }}的内容</van-tab
+        >
+        <!-- 文章列表 -->
+        <article-list :channel="channel" />
+        <!-- /文章列表 -->
+        </van-tab
       >
       <div slot="nav-right" class="placeholder"></div>
       <div slot="nav-right" class="hamburger-btn">
@@ -45,9 +49,13 @@
 
 <script>
 import { getUserChannels } from '@/api/user'
+import ArticleList from './components/article-list.vue'
 
 export default {
   name: 'HomeIndwx',
+  components: {
+    ArticleList
+  },
   data() {
     return {
       active: 0,

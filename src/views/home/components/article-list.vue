@@ -32,9 +32,11 @@
 </template>
 
 <script>
+import { getArticles } from '@/api/article'
+
 export default {
   name: 'ArticleList',
-  porps: {
+  props: {
     channel: {
       type: Object,
       require: true
@@ -48,28 +50,49 @@ export default {
     }
   },
   methods: {
-    // 初始化或滚动列表底部的时候会触发调用 onLoad -> 每滚动至底部一次onLoad执行一次
-    onLoad() {
-      // 1. 请求获取数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
+    async onLoad() {
+      try {
+        // 1. 请求获取数据
+        const { data } = await getArticles({
+          channel_id: this.channel.id, // 频道id
+          // timestamp 简单理解就是请求数据的页码
+          // 请求第1页数据：当前最新时间戳
+          // 用于请求之后数据的时间戳会在当前请求结果中返回给你
+          timestamp: Date.now(), // 时间戳整数 单位毫秒
+          with_top: 1 // 0或1 -> 是否包含置顶，进入页面第一次请求时要包含置顶文章，1-包含置顶，0-不包含
+        })
+        console.log(data)
         // 2. 把请求结果数据放到 list 数组中
-        for (let i = 0; i < 10; i++) {
-          // 0 + 1 = 1
-          this.list.push(this.list.length + 1)
-        }
 
         // 3. 本次数据加载结束之后要把加载状态设置为结束
-        //    loading 关闭以后才能触发一下次的加载更多
-        this.loading = false
-
         // 4. 判断数据全部是否加载完成
-        if (this.list.length >= 40) {
-          // 如果没有数据了，把 finished 设置为 true ，之后不再加触发加载更多
-          this.finished = true
-        }
-      }, 1000)
+      } catch (err) {
+        console.log('请求失败', err)
+      }
     }
+    // 初始化或滚动列表底部的时候会触发调用 onLoad -> 每滚动至底部一次onLoad执行一次
+    // onLoad() {
+    //   // 1. 请求获取数据
+    //   // setTimeout 仅做示例，真实场景中一般为 ajax 请求
+    //   setTimeout(() => {
+    //     // 2. 把请求结果数据放到 list 数组中
+    //     for (let i = 0; i < 10; i++) {
+    //       // 0 + 1 = 1
+    //       // 1 + 1 = 2
+    //       this.list.push(this.list.length + 1)
+    //     }
+
+    //     // 3. 本次数据加载结束之后要把加载状态设置为结束
+    //     //    loading 关闭以后才能触发一下次的加载更多
+    //     this.loading = false
+
+    //     // 4. 判断数据全部是否加载完成
+    //     if (this.list.length >= 40) {
+    //       // 如果没有数据了，把 finished 设置为 true ，之后不再加触发加载更多
+    //       this.finished = true
+    //     }
+    //   }, 1000)
+    // }
   }
 }
 </script>

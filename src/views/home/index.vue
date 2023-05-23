@@ -25,7 +25,6 @@
       v-model="active"
       animated
       swipeable
-      scrollspy
       swipe-threshold="3"
     >
       <van-tab
@@ -80,6 +79,7 @@ export default {
 
 <style scoped lang="less">
 .home-container {
+  padding-bottom:100px;
   .search-btn {
     width: 555px;
     height: 64px;

@@ -26,14 +26,19 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-cell v-for="item in list" :key="item" :title="item" />
+      <van-cell
+        v-for="(article, index) in list"
+        :key="index"
+        :title="article.title"
+      />
     </van-list>
   </div>
 </template>
 
 <script>
 import { getArticles } from '@/api/article'
-
+// const nowTime = new Date();
+// const lastWeekTime = nowTime.setDate(nowTime.getDate() - 1000);
 export default {
   name: 'ArticleList',
   props: {
@@ -46,7 +51,8 @@ export default {
     return {
       list: [], // 储存列表数据的数据
       loading: false, // 控制加载中 loading 状态
-      finished: false // 控制数据加载结束的状态
+      finished: false, // 控制数据加载结束的状态
+      timestamp: null // 请求获取下一页数据的时间戳
     }
   },
   methods: {
@@ -58,14 +64,24 @@ export default {
           // timestamp 简单理解就是请求数据的页码
           // 请求第1页数据：当前最新时间戳
           // 用于请求之后数据的时间戳会在当前请求结果中返回给你
-          timestamp: Date.now(), // 时间戳整数 单位毫秒
+          timestamp: this.timestamp || Date.now(), // 时间戳整数 单位毫秒
           with_top: 1 // 0或1 -> 是否包含置顶，进入页面第一次请求时要包含置顶文章，1-包含置顶，0-不包含
         })
-        console.log(data)
-        // 2. 把请求结果数据放到 list 数组中
 
+        // 2. 把请求结果数据放到 list 数组中
+        const { results } = data.data
+        // 数组的展开操作符，它会把数组元素一个一个拿出来
+        this.list.push(...results)
         // 3. 本次数据加载结束之后要把加载状态设置为结束
+        this.loading = false
         // 4. 判断数据全部是否加载完成
+        if (results.length) {
+          // 更新获取下一页数据的时间戳
+          this.timestamp = data.data.pre_timestamp
+        } else {
+          // 没有数据了，将finished 设置为 true，不再 load 加载更多
+          this.finished = true
+        }
       } catch (err) {
         console.log('请求失败', err)
       }

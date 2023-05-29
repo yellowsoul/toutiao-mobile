@@ -167,4 +167,10 @@ export default {
 }
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.article-list {
+  // 百分比单位是相对于父元素的
+  height:calc(100vh - (92px + 82px + 100px));
+  overflow-y: auto;
+}
+</style>

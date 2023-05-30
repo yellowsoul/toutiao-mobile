@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" fixed placeholder >
+    <van-nav-bar class="page-nav-bar" fixed placeholder>
       <van-button
         class="search-btn"
         slot="title"
@@ -31,18 +31,31 @@
         :title="channel.name"
         v-for="channel in channels"
         :key="channel.id"
-        >
+      >
         <!-- 文章列表 -->
         <article-list :channel="channel" />
         <!-- /文章列表 -->
-        </van-tab
-      >
+      </van-tab>
       <div slot="nav-right" class="placeholder"></div>
-      <div slot="nav-right" class="hamburger-btn">
+      <div
+        slot="nav-right"
+        class="hamburger-btn"
+        @click="isChennelEditShow = true"
+      >
         <i class="toutiao toutiao-gengduo"></i>
       </div>
     </van-tabs>
     <!-- /频道列表 -->
+
+    <!-- 频道编辑弹出层 -->
+    <van-popup
+      v-model="isChennelEditShow"
+      closeable
+      close-icon-position="top-left"
+      position="bottom"
+      :style="{ height: '100%' }"
+    />
+    <!-- /频道编辑弹出层 -->
   </div>
 </template>
 
@@ -58,7 +71,8 @@ export default {
   data() {
     return {
       active: 0,
-      channels: [] // 频道列表
+      channels: [], // 频道列表
+      isChennelEditShow: false // 控制编辑频道弹出层的显示状态
     }
   },
   created() {
@@ -79,7 +93,7 @@ export default {
 
 <style scoped lang="less">
 .home-container {
-  padding-bottom:100px;
+  padding-bottom: 100px;
   .search-btn {
     width: 555px;
     height: 64px;

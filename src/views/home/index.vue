@@ -54,7 +54,9 @@
       close-icon-position="top-left"
       position="bottom"
       :style="{ height: '100%' }"
-    />
+    >
+      <ChannelEdit></ChannelEdit>
+    </van-popup>
     <!-- /频道编辑弹出层 -->
   </div>
 </template>
@@ -62,11 +64,13 @@
 <script>
 import { getUserChannels } from '@/api/user'
 import ArticleList from './components/article-list.vue'
+import ChannelEdit from './components/channel-edit.vue'
 
 export default {
   name: 'HomeIndwx',
   components: {
-    ArticleList
+    ArticleList,
+    ChannelEdit
   },
   data() {
     return {

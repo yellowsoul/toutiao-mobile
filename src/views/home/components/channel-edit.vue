@@ -20,7 +20,7 @@
                     true,则作用该类名
                     false,不作用类名
         -->
-        <span class="text" :class="{ 'active': index === active }" slot="text">{{
+        <span class="text" :class="{ active: index === active }" slot="text">{{
           channel.name
         }}</span>
       </van-grid-item>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import { getAllchannels } from '@/api/channel'
+
 export default {
   name: 'ChannelEdit',
   props: {
@@ -56,9 +58,23 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      allChannels: [] // 所有频道
+    }
   },
-  methods: {}
+  created() {
+    this.loadAllChannels()
+  },
+  methods: {
+    async loadAllChannels() {
+      try {
+        const { data } = await getAllchannels()
+        this.allChannels = data.data.channels
+      } catch (err) {
+        this.$toast('数据获取失败')
+      }
+    }
+  }
 }
 </script>
 

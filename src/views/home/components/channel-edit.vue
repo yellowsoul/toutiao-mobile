@@ -17,6 +17,7 @@
         class="grid-item"
         v-for="(channel, index) in myChannels"
         :key="index"
+        @click="onMyChannelClick(channel, index)"
       >
         <!--
           v-bind:class 语法
@@ -25,7 +26,11 @@
                     true,则作用该类名
                     false,不作用类名
         -->
-        <van-icon v-show="isEdit && !fiexChannels.includes(channel.id)" slot="icon" name="clear"></van-icon>
+        <van-icon
+          v-show="isEdit && !fiexChannels.includes(channel.id)"
+          slot="icon"
+          name="clear"
+        ></van-icon>
         <span class="text" :class="{ active: index === active }" slot="text">{{
           channel.name
         }}</span>
@@ -122,6 +127,16 @@ export default {
     // 添加频道事件
     onAddChannel(channel) {
       this.myChannels.push(channel)
+    },
+
+    // 我的频道项点击
+    onMyChannelClick(channel, index) {
+      if (this.isEdit) {
+        // 编辑状态，执行删除频道
+      } else {
+        // 非编辑状态，执行切换频道
+        this.$emit('update-active', index)
+      }
     }
   }
 }

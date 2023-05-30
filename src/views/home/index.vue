@@ -97,9 +97,11 @@ export default {
     },
 
     // 点击子组件我的频道项更新父组件频道tab栏的active下标
-    onUpdateActive(index) {
+    onUpdateActive(index, isChennelEditShow = true) {
+      // 更新激活的频道项
       this.active = index
-      this.isChennelEditShow = false
+      //  关闭编辑频道弹层
+      this.isChennelEditShow = isChennelEditShow
     }
   }
 }

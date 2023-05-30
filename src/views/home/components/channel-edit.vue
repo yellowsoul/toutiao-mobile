@@ -2,8 +2,14 @@
   <div class="channel-edit">
     <van-cell :border="false">
       <div slot="title" class="title-text">我的频道</div>
-      <van-button class="edit-btn" type="danger" plain round size="mini"
-        >编辑</van-button
+      <van-button
+        class="edit-btn"
+        type="danger"
+        plain
+        round
+        size="mini"
+        @click="isEdit = !isEdit"
+        >{{ isEdit ? '完成' : '编辑' }}</van-button
       >
     </van-cell>
     <van-grid class="my-grid" :gutter="10">
@@ -11,7 +17,6 @@
         class="grid-item"
         v-for="(channel, index) in myChannels"
         :key="index"
-        icon="clear"
       >
         <!--
           v-bind:class 语法
@@ -20,6 +25,7 @@
                     true,则作用该类名
                     false,不作用类名
         -->
+        <van-icon v-show="isEdit && !fiexChannels.includes(channel.id)" slot="icon" name="clear"></van-icon>
         <span class="text" :class="{ active: index === active }" slot="text">{{
           channel.name
         }}</span>
@@ -60,7 +66,9 @@ export default {
   },
   data() {
     return {
-      allChannels: [] // 所有频道
+      allChannels: [], // 所有频道
+      isEdit: false, // 控制编辑状态的显示
+      fiexChannels: [0] // 固定频道，不允许删除
     }
   },
   computed: {
@@ -69,34 +77,34 @@ export default {
     // 所有频道 - 用户频道 = 推荐频道
     recommendChannels() {
       // 数组的 filter 方法：遍历数组把符合条件的元素存储到新数组中并返回
-      return this.allChannels.filter(channel => {
+      return this.allChannels.filter((channel) => {
         // const channels = []
 
         // 数组的 find 方法：遍历数组，把符合条件的第1个元素返回
-        return !this.myChannels.find(myChannel => {
+        return !this.myChannels.find((myChannel) => {
           return myChannel.id === channel.id
         })
 
         // return channels
       })
     }
-  //   recommendChannels() {
-  //     const channels = []
-  //     this.allChannels.forEach((channel) => {
-  //       // find 遍历数组，找到满足条件的元素项
-  //       const ret = this.myChannels.find((myChannel) => {
-  //         return myChannel.id === channel.id
-  //       })
+    //   recommendChannels() {
+    //     const channels = []
+    //     this.allChannels.forEach((channel) => {
+    //       // find 遍历数组，找到满足条件的元素项
+    //       const ret = this.myChannels.find((myChannel) => {
+    //         return myChannel.id === channel.id
+    //       })
 
-  //       // 如果我的频道中不包括该频道项，则收集到推荐频道中
-  //       if (!ret) {
-  //         channels.push(channel)
-  //       }
-  //     })
+    //       // 如果我的频道中不包括该频道项，则收集到推荐频道中
+    //       if (!ret) {
+    //         channels.push(channel)
+    //       }
+    //     })
 
-  //     // 把计算结果返回
-  //     return channels
-  //   }
+    //     // 把计算结果返回
+    //     return channels
+    //   }
   },
   created() {
     this.loadAllChannels()
@@ -148,6 +156,9 @@ export default {
       }
       .active {
         color: red;
+      }
+      .van-grid-item__icon-wrapper {
+        position: unset;
       }
     }
   }

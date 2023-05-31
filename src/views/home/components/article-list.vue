@@ -22,7 +22,7 @@
     -->
     <van-pull-refresh
       v-model="isreFreshLoading"
-      success-text="refreshSuccessText"
+      :success-text="refreshSuccessText"
       success-duration="1500"
       @refresh="onRefresh"
     >

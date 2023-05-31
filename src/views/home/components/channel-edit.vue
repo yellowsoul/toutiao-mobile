@@ -55,7 +55,9 @@
 </template>
 
 <script>
-import { getAllchannels } from '@/api/channel'
+import { getAllchannels, addUserChannel } from '@/api/channel'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/storage'
 
 export default {
   name: 'ChannelEdit',
@@ -77,6 +79,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     // 计算属性会观测内部依赖数据的变化
     // 如果依赖的数据发生变化，则计算属性会重新执行
     // 所有频道 - 用户频道 = 推荐频道
@@ -125,8 +128,23 @@ export default {
     },
 
     // 添加频道事件
-    onAddChannel(channel) {
+    async onAddChannel(channel) {
       this.myChannels.push(channel)
+      // 数据持久化处理
+      if (this.user) {
+        try {
+          // 已登录，把数据请求接口放到线上
+          await addUserChannel({
+            id: channel.id, // 频道ID
+            seq: this.myChannels.length // 序号
+          })
+        } catch (err) {
+          this.$toast('保存失败，请稍后重试')
+        }
+      } else {
+        // 未登录，把数据存储到本地
+        setItem('TOUTIAO_CHANNELS', this.myChannels)
+      }
     },
 
     // 我的频道项点击

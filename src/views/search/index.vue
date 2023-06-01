@@ -15,12 +15,32 @@
       />
     </form>
     <!-- /搜索栏 -->
+
+    <!-- 搜索历史记录 -->
+    <search-history />
+    <!-- /搜索历史记录 -->
+
+    <!-- 联想建议 -->
+    <search-suggestion />
+    <!-- /联想建议 -->
+
+    <!-- 历史记录 -->
+    <search-result />
+    <!-- /历史记录 -->
   </div>
 </template>
 
 <script>
+import SearchHistory from './components/search-history.vue'
+import SearchSuggestion from './components/search-suggestion.vue'
+import SearchResult from './components/search-result.vue'
 export default {
   name: 'SearchIndex',
+  components: {
+    SearchHistory,
+    SearchSuggestion,
+    SearchResult
+  },
   data() {
     return {
       searchText: ''

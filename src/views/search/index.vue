@@ -12,21 +12,23 @@
         background="#3296fa"
         @search="onSearch"
         @cancel="onCancel"
+        @focus="isResultShow = false"
       />
     </form>
     <!-- /搜索栏 -->
 
-    <!-- 搜索历史记录 -->
-    <search-history />
-    <!-- /搜索历史记录 -->
+    <!-- 历史结果 -->
+    <search-result v-if="isResultShow" />
+    <!-- /历史结果 -->
 
     <!-- 联想建议 -->
-    <search-suggestion />
+    <search-suggestion v-else-if="searchText" />
     <!-- /联想建议 -->
 
-    <!-- 历史记录 -->
-    <search-result />
-    <!-- /历史记录 -->
+    <!-- 搜索历史记录 -->
+    <search-history v-else />
+    <!-- /搜索历史记录 -->
+
   </div>
 </template>
 
@@ -43,12 +45,14 @@ export default {
   },
   data() {
     return {
-      searchText: ''
+      searchText: '',
+      isResultShow: false // 控制搜索结果的展示
     }
   },
   methods: {
     onSearch(val) {
       console.log(val)
+      this.isResultShow = true
     },
     onCancel() {
       this.$router.back()

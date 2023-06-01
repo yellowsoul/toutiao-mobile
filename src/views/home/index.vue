@@ -87,7 +87,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('user')
+    ...mapState(['user'])
   },
   created() {
     this.loadChannels()

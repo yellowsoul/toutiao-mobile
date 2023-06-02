@@ -1,6 +1,11 @@
 <template>
   <div class="search-suggestion">
-    <van-cell icon="search" v-for="(text, index) in suggestions" :key="index">
+    <van-cell
+      icon="search"
+      v-for="(text, index) in suggestions"
+      :key="index"
+      @click="$emit('search', text)"
+    >
       <div slot="title" v-html="highlight(text)"></div>
     </van-cell>
     <!-- 双花括号绑定会直接输出纯文本内容 -->

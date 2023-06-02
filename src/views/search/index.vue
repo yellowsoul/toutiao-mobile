@@ -18,20 +18,20 @@
     <!-- /搜索栏 -->
 
     <!-- 历史结果 -->
-    <search-result v-if="isResultShow" />
+    <search-result v-if="isResultShow" :search-text="searchText" />
     <!-- /历史结果 -->
 
     <!-- 联想建议 -->
     <search-suggestion
       v-else-if="searchText"
       :search-text="searchText"
+      @search="onSearch"
     />
     <!-- /联想建议 -->
 
     <!-- 搜索历史记录 -->
     <search-history v-else />
     <!-- /搜索历史记录 -->
-
   </div>
 </template>
 
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     onSearch(val) {
-      console.log(val)
+      this.searchText = val
       this.isResultShow = true
     },
     onCancel() {

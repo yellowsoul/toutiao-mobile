@@ -5,16 +5,11 @@
       <span>完成</span>
       <van-icon name="delete-o"></van-icon>
     </van-cell>
-    <van-cell title="hello">
-      <van-icon name="close"></van-icon>
-    </van-cell>
-    <van-cell title="hello">
-      <van-icon name="close"></van-icon>
-    </van-cell>
-    <van-cell title="hello">
-      <van-icon name="close"></van-icon>
-    </van-cell>
-    <van-cell title="hello">
+    <van-cell
+      :title="history"
+      v-for="(history, index) in searchHistories"
+      :key="index"
+    >
       <van-icon name="close"></van-icon>
     </van-cell>
   </div>
@@ -23,6 +18,12 @@
 <script>
 export default {
   name: 'SearchHistor',
+  props: {
+    searchHistories: {
+      type: Array,
+      required: true
+    }
+  },
   data() {
     return {}
   },

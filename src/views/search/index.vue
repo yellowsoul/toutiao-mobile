@@ -30,10 +30,7 @@
     <!-- /联想建议 -->
 
     <!-- 搜索历史记录 -->
-    <search-history
-      v-else
-      :search-histories="searchHistories"
-    />
+    <search-history v-else :search-histories="searchHistories" />
     <!-- /搜索历史记录 -->
   </div>
 </template>
@@ -42,6 +39,10 @@
 import SearchHistory from './components/search-history.vue'
 import SearchSuggestion from './components/search-suggestion.vue'
 import SearchResult from './components/search-result.vue'
+import { setItem, getItem } from '@/utils/storage'
+import { getSearchHistories } from '@/api/search'
+import { mapState } from 'vuex'
+
 export default {
   name: 'SearchIndex',
   components: {
@@ -56,22 +57,52 @@ export default {
       searchHistories: [] // 搜索历史数据
     }
   },
+  computed: {
+    ...mapState(['user'])
+  },
+  created() {
+    // 获取登录后用户搜索历史记录
+    this.loadSearchHistories()
+  },
   methods: {
     onSearch(val) {
       // 把输入框设置为你要搜索的文本
       this.searchText = val
       const index = this.searchHistories.indexOf(val)
+
       if (index !== -1) {
         // 把重复项删除
         this.searchHistories.splice(index, 1)
       }
+
       // 把最新的搜索历史记录放在顶部
       this.searchHistories.unshift(val)
+
+      // 如果用户已登录，，则把搜索历史记录存储到线上
+      //    提示：只要我们调用获取搜索结果的数据接口，后端会给我们自动存储用户的搜索历史记录
+      // 如果没有登录，则把搜索历史记录存储到本地
+      setItem('search-histories', this.searchHistories)
       // 展示搜索结果
       this.isResultShow = true
     },
     onCancel() {
       this.$router.back()
+    },
+
+    // 获取登录后用户搜索历史记录
+    async loadSearchHistories() {
+      // 因为后端帮我们存储的用户搜索历史记录太少了（只有4条）
+      // 所以我们这里让后端返回的历史记录和本地的历史记录合并到一起
+      // 如果用户已登录
+      const searchHistories = getItem('search-histories') || []
+      if (this.user) {
+        const { data } = await getSearchHistories()
+        console.log(data.data.keywords)
+      }
+
+      console.log(searchHistories)
+
+      this.searchHistories = searchHistories
     }
   }
 }

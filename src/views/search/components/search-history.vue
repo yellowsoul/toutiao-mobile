@@ -1,16 +1,26 @@
 <template>
   <div class="search-history">
     <van-cell title="搜索历史">
-      <span>全部删除</span>
-      <span>完成</span>
-      <van-icon name="delete-o"></van-icon>
+      <div v-if="isDeleteShow">
+        <span>全部删除</span>
+        &nbsp;&nbsp;
+        <span @click="isDeleteShow = false">完成</span>
+      </div>
+      <van-icon
+        v-else
+        name="delete-o"
+        @click="isDeleteShow = true"
+      ></van-icon>
     </van-cell>
     <van-cell
       :title="history"
       v-for="(history, index) in searchHistories"
       :key="index"
     >
-      <van-icon name="close"></van-icon>
+      <van-icon
+        v-show="isDeleteShow"
+        name="close"
+        ></van-icon>
     </van-cell>
   </div>
 </template>
@@ -25,7 +35,9 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      isDeleteShow: false // 删除的显示状态
+    }
   },
   methods: {}
 }

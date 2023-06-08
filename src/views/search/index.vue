@@ -30,7 +30,7 @@
     <!-- /联想建议 -->
 
     <!-- 搜索历史记录 -->
-    <search-history v-else :search-histories="searchHistories" />
+    <search-history v-else :search-histories="searchHistories" @search="onSearch"/>
     <!-- /搜索历史记录 -->
   </div>
 </template>

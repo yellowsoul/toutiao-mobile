@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { setItem } from '@/utils/storage'
 export default {
   name: 'SearchHistor',
   props: {
@@ -48,6 +49,11 @@ export default {
         // 持久化处理
         // 1. 修改本地存储的数据
         // 2. 请求接口删除线上的数据
+        // 无论是否登录都先把数据持久化到本地
+        // 如果已登录，则删除线上的历史数据
+        //    没有删除单个历史记录的接口
+        //    只有删除所有历史记录的接口
+        setItem('search-histories', this.searchHistories)
         return
       }
       // 非删除状态，展示搜索结果

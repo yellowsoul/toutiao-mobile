@@ -40,7 +40,7 @@ import SearchHistory from './components/search-history.vue'
 import SearchSuggestion from './components/search-suggestion.vue'
 import SearchResult from './components/search-result.vue'
 import { setItem, getItem } from '@/utils/storage'
-import { getSearchHistories } from '@/api/search'
+// import { getSearchHistories } from '@/api/search'
 import { mapState } from 'vuex'
 
 export default {
@@ -94,15 +94,18 @@ export default {
       // 因为后端帮我们存储的用户搜索历史记录太少了（只有4条）
       // 所以我们这里让后端返回的历史记录和本地的历史记录合并到一起
       // 如果用户已登录
-      let searchHistories = getItem('search-histories') || []
-      if (this.user) {
-        const { data } = await getSearchHistories()
-        // console.log(data.data.keywords)
-        // 合并数据：[...数组, ...数组]
-        // 把 Set 转为数组：[...Set对象]
-        // 数据去重：[...new Set([...数组, ...数组])]
-        searchHistories = [...new Set([...searchHistories, ...data.data.keywords])]
-      }
+      const searchHistories = getItem('search-histories') || []
+
+      // 因后台只能返回4条历史记录,我们原本打算将历史记录与本地的合并处理
+      // 可是后台并没有删除单条历史项的接口,所以我们这边只操作本地的搜索记录就好,这里把下以代码注释..
+      // if (this.user) {
+      //   const { data } = await getSearchHistories()
+      //   // console.log(data.data.keywords)
+      //   // 合并数据：[...数组, ...数组]
+      //   // 把 Set 转为数组：[...Set对象]
+      //   // 数据去重：[...new Set([...数组, ...数组])]
+      //   searchHistories = [...new Set([...searchHistories, ...data.data.keywords])]
+      // }
 
       // console.log(searchHistories)
 

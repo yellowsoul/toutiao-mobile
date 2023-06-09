@@ -30,7 +30,7 @@
     <!-- /联想建议 -->
 
     <!-- 搜索历史记录 -->
-    <search-history v-else :search-histories="searchHistories" @search="onSearch"/>
+    <search-history v-else :search-histories="searchHistories" @search="onSearch" @update-histories="searchHistories = $event"/>
     <!-- /搜索历史记录 -->
   </div>
 </template>
@@ -60,6 +60,12 @@ export default {
   computed: {
     ...mapState(['user'])
   },
+  watch: {
+    // 监视搜索历史记录的变化，存储到本地存储（小计巧监视统一处理：这里监听开启后数据发生改变会自动持久化本地存储，所以其它地方的相同代码无需再次调用，仅此一行即可）
+    searchHistories() {
+      setItem('search-histories', this.searchHistories)
+    }
+  },
   created() {
     // 获取登录后用户搜索历史记录
     this.loadSearchHistories()
@@ -81,7 +87,7 @@ export default {
       // 如果用户已登录，，则把搜索历史记录存储到线上
       //    提示：只要我们调用获取搜索结果的数据接口，后端会给我们自动存储用户的搜索历史记录
       // 如果没有登录，则把搜索历史记录存储到本地
-      setItem('search-histories', this.searchHistories)
+      // setItem('search-histories', this.searchHistories)
       // 展示搜索结果
       this.isResultShow = true
     },

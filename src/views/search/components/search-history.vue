@@ -2,15 +2,19 @@
   <div class="search-history">
     <van-cell title="搜索历史">
       <div v-if="isDeleteShow">
-        <span>全部删除</span>
+        <!--
+          prop 数据如果是引用类型(数组、对象)可以修改，注意这个修改指的是：user.name = 'Jack'、arr.push(123)、arr.splice(0, 1)
+
+          但是任何 prop 数据都不能重新赋值 xxx = xxx
+
+          如果你想要让 prop 数据 = 新的数据 =
+          新的数据：让父组件自己修改
+        -->
+        <span @click="$emit('update-histories', [])">全部删除</span>
         &nbsp;&nbsp;
         <span @click="isDeleteShow = false">完成</span>
       </div>
-      <van-icon
-        v-else
-        name="delete-o"
-        @click="isDeleteShow = true"
-      ></van-icon>
+      <van-icon v-else name="delete-o" @click="isDeleteShow = true"></van-icon>
     </van-cell>
     <van-cell
       :title="history"
@@ -18,16 +22,13 @@
       :key="index"
       @click="onDelete(history, index)"
     >
-      <van-icon
-        v-show="isDeleteShow"
-        name="close"
-        ></van-icon>
+      <van-icon v-show="isDeleteShow" name="close"></van-icon>
     </van-cell>
   </div>
 </template>
 
 <script>
-import { setItem } from '@/utils/storage'
+// import { setItem } from '@/utils/storage'
 export default {
   name: 'SearchHistor',
   props: {
@@ -53,7 +54,7 @@ export default {
         // 如果已登录，则删除线上的历史数据
         //    没有删除单个历史记录的接口
         //    只有删除所有历史记录的接口
-        setItem('search-histories', this.searchHistories)
+        // setItem('search-histories', this.searchHistories)
         return
       }
       // 非删除状态，展示搜索结果

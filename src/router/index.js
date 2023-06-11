@@ -46,7 +46,8 @@ const routes = [
   {
     path: '/article/:articleId',
     name: 'article',
-    component: () => import('@/views/article')
+    component: () => import('@/views/article'),
+    props: true //开 启 Props 值参，说白了就是把路由参数映射到组件的 props 数据中 参考：https://v3.router.vuejs.org/zh/guide/essentials/passing-props.html
   }
 ]
 

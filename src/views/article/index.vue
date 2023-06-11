@@ -5,6 +5,12 @@
 <script>
 export default {
   name: 'ArticleIndex',
+  props: {
+    articleId: {
+      type: [Number, String],
+      required: true
+    }
+  },
   data() {
     return {}
   },

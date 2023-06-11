@@ -5,24 +5,22 @@
       class="page-nav-bar"
       left-arrow
       title="黑马头条"
-      fixed placeholder
+      fixed
+      placeholder
     ></van-nav-bar>
     <!-- /导航栏 -->
 
     <div class="main-wrap">
       <!-- 加载中 -->
       <div class="loading-wrap">
-        <van-loading
-          color="#3296fa"
-          vertical
-        >加载中</van-loading>
+        <van-loading color="#3296fa" vertical>加载中</van-loading>
       </div>
       <!-- /加载中 -->
 
       <!-- 加载完成-文章详情 -->
       <div class="article-detail">
         <!-- 文章标题 -->
-        <h1 class="article-title">这是文章标题</h1>
+        <h1 class="article-title">{{ article.title }}</h1>
         <!-- /文章标题 -->
 
         <!-- 用户信息 -->
@@ -32,10 +30,12 @@
             slot="icon"
             round
             fit="cover"
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
+            :src="article.aut_photo"
           />
-          <div slot="title" class="user-name">黑马头条号</div>
-          <div slot="label" class="publish-date">14小时前</div>
+          <div slot="title" class="user-name">{{ article.aut_name }}</div>
+          <div slot="label" class="publish-date">
+            {{ article.pubdate | relativeTime }}
+          </div>
           <van-button
             class="follow-btn"
             type="info"
@@ -43,7 +43,8 @@
             round
             size="small"
             icon="plus"
-          >关注</van-button>
+            >关注</van-button
+          >
           <!-- <van-button
             class="follow-btn"
             round
@@ -53,7 +54,7 @@
         <!-- /用户信息 -->
 
         <!-- 文章内容 -->
-        <div class="article-content">这是文章内容</div>
+        <div class="article-content" v-html="article.content"></div>
         <van-divider>正文结束</van-divider>
       </div>
       <!-- /加载完成-文章详情 -->
@@ -76,25 +77,12 @@
 
     <!-- 底部区域 -->
     <div class="article-bottom">
-      <van-button
-        class="comment-btn"
-        type="default"
-        round
-        size="small"
-      >写评论</van-button>
-      <van-icon
-        name="comment-o"
-        info="123"
-        color="#777"
-      />
-      <van-icon
-        color="#777"
-        name="star-o"
-      />
-      <van-icon
-        color="#777"
-        name="good-job-o"
-      />
+      <van-button class="comment-btn" type="default" round size="small"
+        >写评论</van-button
+      >
+      <van-icon name="comment-o" info="123" color="#777" />
+      <van-icon color="#777" name="star-o" />
+      <van-icon color="#777" name="good-job-o" />
       <van-icon name="share" color="#777777"></van-icon>
     </div>
     <!-- /底部区域 -->
@@ -112,7 +100,9 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      article: {} // 文章详情
+    }
   },
   created() {
     this.loadArticle()
@@ -121,7 +111,7 @@ export default {
     async loadArticle() {
       try {
         const { data } = await getArticleById(this.articleId)
-        console.log(data)
+        this.article = data.data
       } catch (err) {
         console.log('获取数据失败', err)
       }
@@ -131,7 +121,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-  .article-container {
+.article-container {
   .main-wrap {
     position: fixed;
     left: 0;

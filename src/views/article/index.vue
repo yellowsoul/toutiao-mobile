@@ -37,6 +37,13 @@
             {{ article.pubdate | relativeTime }}
           </div>
           <van-button
+            v-if="article.is_followed"
+            class="follow-btn"
+            round
+            size="small"
+          >已关注</van-button>
+          <van-button
+            v-else
             class="follow-btn"
             type="info"
             color="#3296fa"
@@ -45,11 +52,6 @@
             icon="plus"
             >关注</van-button
           >
-          <!-- <van-button
-            class="follow-btn"
-            round
-            size="small"
-          >已关注</van-button> -->
         </van-cell>
         <!-- /用户信息 -->
 

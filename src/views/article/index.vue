@@ -5,6 +5,7 @@
       class="page-nav-bar"
       left-arrow
       title="黑马头条"
+      fixed placeholder
     ></van-nav-bar>
     <!-- /导航栏 -->
 
@@ -106,7 +107,7 @@ export default {
   name: 'ArticleIndex',
   props: {
     articleId: {
-      type: [Number, String],
+      type: [Number, String, Object],
       required: true
     }
   },

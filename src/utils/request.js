@@ -3,6 +3,25 @@
  */
 import axios from 'axios'
 import store from '@/store'
+import JSONBig from 'json-bigint'
+
+const jsonStr = '{ "art_id": 1245953273786007552 }'
+
+// JSON.parse()
+console.log(JSON.parse(jsonStr)) // 1245953273786007600
+// JSON.stringify()
+
+// JSONBig 可以处理数据中超出 JavaScript 案全整数范围的问题
+// JSONBig.parse() // 把 JSON 格式的字符串转为 JavaScript 对象
+console.log(JSONBig.parse(jsonStr))
+
+// 使用的时候需要把 BigNumber 类型的数据转为字符串来使用
+console.log(JSONBig.parse(jsonStr).art_id.toString()) // 1245953273786007552
+
+console.log(JSON.stringify(JSONBig.parse(jsonStr)))
+
+// JSONBig.stringify() // 把 JavaScript 对象 转为 JSON 格式的字符串对象
+console.log(JSONBig.stringify(JSONBig.parse(jsonStr)))
 
 const request = axios.create({
   baseURL: 'http://api-toutiao-web.itheima.net' // 接口的基准路径

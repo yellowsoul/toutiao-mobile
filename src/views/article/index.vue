@@ -93,7 +93,9 @@
         ></div>
         <van-divider>正文结束</van-divider>
         <!-- 文章评论列表 -->
-        <comment-list />
+        <comment-list
+          :source="article.art_id"
+        />
         <!-- /文章评论列表 -->
         <!-- 底部区域 -->
         <div class="article-bottom">

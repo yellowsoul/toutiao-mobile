@@ -103,7 +103,11 @@
             v-model="article.is_collected"
             :article-id="article.art_id"
           />
-          <van-icon color="#777" name="good-job-o" />
+          <!-- 点赞 -->
+          <like-article
+            v-model="article.attitude"
+            :article-id="article.art_id"
+          />
           <van-icon name="share" color="#777777"></van-icon>
         </div>
         <!-- /底部区域 -->
@@ -133,6 +137,7 @@ import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
 import FollowUser from '@/components/follow-user'
 import CollectArticle from '@/components/collect-article'
+import LikeArticle from '@/components/like-article'
 
 // ImagePreview({
 //   images: [
@@ -150,7 +155,8 @@ export default {
   name: 'ArticleIndex',
   components: {
     FollowUser,
-    CollectArticle
+    CollectArticle,
+    LikeArticle
   },
   props: {
     // 可以链接写死 id 11(这个是有数据的) -> http://localhost:8080/#/article/11

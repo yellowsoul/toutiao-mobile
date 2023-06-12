@@ -117,7 +117,7 @@
         >写评论</van-button
       >
       <van-icon name="comment-o" info="123" color="#777" />
-      <van-icon color="#777" name="star-o" />
+      <collect-article />
       <van-icon color="#777" name="good-job-o" />
       <van-icon name="share" color="#777777"></van-icon>
     </div>
@@ -129,6 +129,7 @@
 import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
 import FollowUser from '@/components/follow-user'
+import CollectArticle from '@/components/collect-article'
 
 // ImagePreview({
 //   images: [
@@ -145,7 +146,8 @@ import FollowUser from '@/components/follow-user'
 export default {
   name: 'ArticleIndex',
   components: {
-    FollowUser
+    FollowUser,
+    CollectArticle
   },
   props: {
     // 可以链接写死 id 11(这个是有数据的) -> http://localhost:8080/#/article/11
@@ -331,7 +333,8 @@ export default {
       line-height: 46px;
       color: #a7a7a7;
     }
-    .van-icon {
+
+    /deepp/ .van-icon {
       font-size: 40px;
       .van-info {
         font-size: 22px;

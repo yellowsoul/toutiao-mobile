@@ -95,6 +95,7 @@
         <!-- 文章评论列表 -->
         <comment-list
           :source="article.art_id"
+          @onload-success="totalCommentCount = $event.total_count"
         />
         <!-- /文章评论列表 -->
         <!-- 底部区域 -->
@@ -102,7 +103,7 @@
           <van-button class="comment-btn" type="default" round size="small"
             >写评论</van-button
           >
-          <van-icon name="comment-o" info="123" color="#777" />
+          <van-icon name="comment-o" :info="totalCommentCount" color="#777" />
           <!-- 收藏 -->
           <collect-article
             v-model="article.is_collected"
@@ -176,7 +177,8 @@ export default {
     return {
       article: {}, // 文章详情
       loading: true, // 加载中的 loading 状态
-      errStatus: 0 // 失败的状态码
+      errStatus: 0, // 失败的状态码
+      totalCommentCount: 0
     }
   },
   created() {

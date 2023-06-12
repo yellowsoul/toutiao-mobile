@@ -36,7 +36,17 @@
           <div slot="label" class="publish-date">
             {{ article.pubdate | relativeTime }}
           </div>
-          <van-button
+          <!--
+            关注组件
+            模板中的 $event 是事件参数
+          -->
+          <follow-user
+            class="follow-btn"
+            :is-followed="article.is_followed"
+            :user-id="article.aut_id"
+            @update-is_followed="article.is_followed = $event"
+          />
+          <!-- <van-button
             v-if="article.is_followed"
             class="follow-btn"
             round
@@ -56,7 +66,7 @@
             :loading="followLoading"
             @click="onFollow"
             >关注</van-button
-          >
+          > -->
         </van-cell>
         <!-- /用户信息 -->
 
@@ -103,7 +113,7 @@
 <script>
 import { getArticleById } from '@/api/article'
 import { ImagePreview } from 'vant'
-import { addFollow, deleteFollow } from '@/api/user'
+import FollowUser from '@/components/follow-user'
 
 // ImagePreview({
 //   images: [
@@ -119,6 +129,9 @@ import { addFollow, deleteFollow } from '@/api/user'
 
 export default {
   name: 'ArticleIndex',
+  components: {
+    FollowUser
+  },
   props: {
     // 可以链接写死 id 11(这个是有数据的) -> http://localhost:8080/#/article/11
     articleId: {
@@ -130,8 +143,7 @@ export default {
     return {
       article: {}, // 文章详情
       loading: true, // 加载中的 loading 状态
-      errStatus: 0, // 失败的状态码
-      followLoading: false
+      errStatus: 0 // 失败的状态码
     }
   },
   created() {
@@ -192,29 +204,6 @@ export default {
           })
         }
       })
-    },
-
-    async onFollow() {
-      this.followLoading = true // 展示关注按钮的 loading 状态
-      try {
-        if (this.article.is_followed) {
-          // 已经关注，取消关注
-          await deleteFollow(this.article.aut_id)
-        } else {
-          // 没有关注，添加关注
-          await addFollow(this.article.aut_id)
-        }
-
-        // 更新视图状态
-        this.article.is_followed = !this.article.is_followed
-      } catch (err) {
-        let message = '操作失败，请重试！'
-        if (err.response && err.response.status === 400) {
-          message = '你不能关注你自己！'
-        }
-        this.$toast(message)
-      }
-      this.followLoading = false // 关闭关注按钮的 loading 状态
     }
   }
 }

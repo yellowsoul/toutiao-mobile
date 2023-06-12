@@ -39,12 +39,27 @@
           <!--
             关注组件
             模板中的 $event 是事件参数
+            当我们传递给子组件的数据即要使用还要修改
+              传递：props
+                :is-followed="article.is_followed"
+              修改：自定义事件
+                @update-is_followed="article.is_followed = $event"
+            简写方式：在组件上使用 v-model
+              value="article.is_followed"
+              @input="article.is_followed = $event"
+
+            如果需要修改 v-model 的规则名称，可以通过子组件的 model 属性来配置修改
+            文档：https://v2.cn.vuejs.org/v2/guide/components-custom-events.html
+
+            一个组件上只能使用一次 v-model,
+
+            如果有多个数据需要实现类似于 v-model 的效果，咋办？
+            可以使用属性的 .sync 修饰符
           -->
           <follow-user
             class="follow-btn"
-            :is-followed="article.is_followed"
+            v-model="article.is_followed"
             :user-id="article.aut_id"
-            @update-is_followed="article.is_followed = $event"
           />
           <!-- <van-button
             v-if="article.is_followed"

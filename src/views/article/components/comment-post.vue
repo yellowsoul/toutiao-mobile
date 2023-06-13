@@ -24,9 +24,16 @@ export default {
   name: 'CommentPost',
   components: {},
   props: {
+    // 如果是发布文章评论,帽传递文章 ID
+    // 如果是发布评论回复,则传递评论 ID
     target: {
       type: [Number, String, Object],
       required: true
+    },
+    // 如果是发布评论回复,则也需要传递文章 ID
+    articleId: {
+      type: [Number, String, Object],
+      default: null
     }
   },
   data() {
@@ -48,9 +55,9 @@ export default {
       })
       try {
         const { data } = await addComment({
-          target: this.target, // 评论的目标id（评论文章即为文章id，对评论进行回复则为评论id）
+          target: this.target.toString(), // 评论的目标id（评论文章即为文章id，对评论进行回复则为评论id）
           content: this.message, // 评论内容
-          art_id: null // 文章id，对评论内容发表回复时，需要传递此参数，表明所属文章id。对文章进行评论，不要传此参数。
+          art_id: this.articleId ? this.articleId.toString() : null // 文章id，对评论内容发表回复时，需要传递此参数，表明所属文章id。对文章进行评论，不要传此参数。
         })
         console.log(data)
         // 关闭弹出层 -> 父组件处理

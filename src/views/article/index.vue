@@ -194,7 +194,7 @@ export default {
       article: {}, // 文章详情
       loading: true, // 加载中的 loading 状态
       errStatus: 0, // 失败的状态码
-      totalCommentCount: 0,
+      totalCommentCount: 0, // 评论的总数量
       isPostShow: false, // 控制发布评论的显示状态
       commentList: [] // 评论列表
     }
@@ -262,6 +262,10 @@ export default {
     onPostSuccess(data) {
       // 关闭弹出层
       this.isPostShow = false
+
+      // 更新评论的总数量
+      this.totalCommentCount++
+
       // 将发布内容显示到列表顶部
       this.commentList.unshift(data.new_obj)
     }

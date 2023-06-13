@@ -7,19 +7,23 @@
     error-text="加载失败，请点击重试"
     @load="onLoad"
   >
-    <van-cell
+    <comment-item
       v-for="(item, index) in list"
       :key="index"
-      :title="item.content"
+      :comment="item"
     />
   </van-list>
 </template>
 
 <script>
 import { getComments } from '@/api/comment'
+import CommentItem from './comment-item'
 
 export default {
   name: 'CommentList',
+  components: {
+    CommentItem
+  },
   props: {
     source: {
       type: [Number, String, Object],

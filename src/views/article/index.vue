@@ -97,6 +97,7 @@
           :source="article.art_id"
           :list="commentList"
           @onload-success="totalCommentCount = $event.total_count"
+          @reply-click="onReplyClick"
         />
         <!-- /文章评论列表 -->
         <!-- 底部区域 -->
@@ -107,7 +108,8 @@
             round
             size="small"
             @click="isPostShow = true"
-          >写评论</van-button>
+            >写评论</van-button
+          >
           <van-icon name="comment-o" :info="totalCommentCount" color="#777" />
           <!-- 收藏 -->
           <collect-article
@@ -131,6 +133,12 @@
           />
         </van-popup>
         <!-- /发布评论弹出层 -->
+
+        <!-- 评论回复 -->
+        <van-popup v-model="isReplyShow" position="bottom">
+          <comment-reply />
+        </van-popup>
+        <!-- /评论回复 -->
       </div>
       <!-- /加载完成-文章详情 -->
 
@@ -160,6 +168,7 @@ import CollectArticle from '@/components/collect-article'
 import LikeArticle from '@/components/like-article'
 import CommentList from './components/comment-list'
 import CommentPost from './components/comment-post'
+import CommentReply from './components/comment-reply'
 
 // ImagePreview({
 //   images: [
@@ -180,7 +189,8 @@ export default {
     CollectArticle,
     LikeArticle,
     CommentList,
-    CommentPost
+    CommentPost,
+    CommentReply
   },
   props: {
     // 可以链接写死 id 11(这个是有数据的) -> http://localhost:8080/#/article/11
@@ -196,7 +206,8 @@ export default {
       errStatus: 0, // 失败的状态码
       totalCommentCount: 0, // 评论的总数量
       isPostShow: false, // 控制发布评论的显示状态
-      commentList: [] // 评论列表
+      commentList: [], // 评论列表
+      isReplyShow: false // 控制回复的显示状态
     }
   },
   created() {
@@ -268,6 +279,13 @@ export default {
 
       // 将发布内容显示到列表顶部
       this.commentList.unshift(data.new_obj)
+    },
+
+    onReplyClick(comment) {
+      console.log('onReplyClick', comment)
+
+      // 展示回复内容
+      this.isReplyShow = true
     }
   }
 }

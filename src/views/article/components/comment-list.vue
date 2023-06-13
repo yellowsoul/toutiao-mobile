@@ -28,11 +28,15 @@ export default {
     source: {
       type: [Number, String, Object],
       required: true
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   data() {
     return {
-      list: [],
+      // list: [],
       loading: false,
       finished: false,
       offset: null, // 获取下一页数据的标记
@@ -65,7 +69,7 @@ export default {
         // 4. 判断是否还有数据
         if (results.length) {
           //    有就更新获取下一页的数据页码
-          this.offset = results.last_id
+          this.offset = data.data.last_id
         } else {
           //    没有就将 finished 设置结束
           this.finished = true

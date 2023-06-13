@@ -135,7 +135,7 @@
         <!-- /发布评论弹出层 -->
 
         <!-- 评论回复 -->
-        <van-popup v-model="isReplyShow" position="bottom">
+        <van-popup v-model="isReplyShow" position="bottom" :style="{ height: '90%' }">
           <!-- 这里使用 v-if 的目的是让组件随着弹出层的显示进行渲染和销毁，防止加载过的组件不重新渲染导致数据不会重新加载的问题 -->
           <comment-reply
             v-if="isReplyShow"

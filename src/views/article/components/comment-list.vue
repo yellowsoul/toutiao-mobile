@@ -83,6 +83,7 @@ export default {
         if (results.length) {
           //    有就更新获取下一页的数据页码
           this.offset = data.data.last_id
+          console.log(this.offset)
         } else {
           //    没有就将 finished 设置结束
           this.finished = true

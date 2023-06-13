@@ -1,7 +1,10 @@
 <template>
   <div class="comment-reply">
     <!-- 头部信息 -->
-    <van-nav-bar :title="`${comment.reply_count}条回复`">
+    <van-nav-bar
+      class="nav-bar"
+      :title="`${comment.reply_count}条回复`"
+    >
       <van-icon slot="left" name="cross" @click="$emit('close')"></van-icon>
     </van-nav-bar>
     <!-- /头部信息 -->
@@ -87,6 +90,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+.nav-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 10%;
+}
 .article-bottom {
   position: fixed;
   left: 0;

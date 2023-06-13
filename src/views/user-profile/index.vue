@@ -17,7 +17,12 @@
         :src="user.photo"
       />
     </van-cell>
-    <van-cell title="昵称" :value="user.name" is-link/>
+    <van-cell
+      title="昵称"
+      :value="user.name"
+      is-link
+      @click="isUpdateNameShow = true"
+    />
     <van-cell
       title="性别"
       :value="user.gender === 0 ? '男': '女'"
@@ -25,6 +30,16 @@
     />
     <van-cell title="生日" :value="user.birthday" is-link/>
     <!-- /个人信息 -->
+
+    <!-- 编辑昵称 -->
+    <van-popup
+      v-model="isUpdateNameShow"
+      style="height: 100%"
+      position="bottom"
+    >
+    hello
+    </van-popup>
+    <!-- /编辑昵称 -->
   </div>
 </template>
 
@@ -35,7 +50,8 @@ export default {
   name: 'UserProfile',
   data() {
     return {
-      user: {} // 个人信息
+      user: {}, // 个人信息
+      isUpdateNameShow: false
     }
   },
   created() {

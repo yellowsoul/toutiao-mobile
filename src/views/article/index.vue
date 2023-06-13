@@ -124,7 +124,7 @@
 
         <!-- 发布评论弹出层 -->
         <van-popup v-model="isPostShow" position="bottom">
-          123
+          <comment-post />
         </van-popup>
         <!-- /发布评论弹出层 -->
       </div>
@@ -154,7 +154,8 @@ import { ImagePreview } from 'vant'
 import FollowUser from '@/components/follow-user'
 import CollectArticle from '@/components/collect-article'
 import LikeArticle from '@/components/like-article'
-import CommentList from './components/comment-list.vue'
+import CommentList from './components/comment-list'
+import CommentPost from './components/comment-post'
 
 // ImagePreview({
 //   images: [
@@ -174,7 +175,8 @@ export default {
     FollowUser,
     CollectArticle,
     LikeArticle,
-    CommentList
+    CommentList,
+    CommentPost
   },
   props: {
     // 可以链接写死 id 11(这个是有数据的) -> http://localhost:8080/#/article/11

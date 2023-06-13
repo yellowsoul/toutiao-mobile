@@ -37,7 +37,7 @@
       style="height: 100%"
       position="bottom"
     >
-      <update-name />
+      <update-name @close="isUpdateNameShow = false" />
     </van-popup>
     <!-- /编辑昵称 -->
   </div>
@@ -79,6 +79,10 @@ export default {
   .avatar{
     width: 60px;
     height: 60px;
+  }
+
+  .van-popup {
+    background-color: #f5f7f9;
   }
 }
 </style>

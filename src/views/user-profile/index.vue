@@ -70,7 +70,7 @@
     >
       <update-birthday
         v-if="isUpdateBirthdayShow"
-        v-model="user.Birthday"
+        v-model="user.birthday"
         @close="isUpdateBirthdayShow = false"
       />
     </van-popup>

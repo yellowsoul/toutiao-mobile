@@ -3,7 +3,7 @@
     <img class="img" :src="img" ref="img" />
     <div class="toolbar">
       <div class="cancel" @click="$emit('close')">取消</div>
-      <div class="confirm">完成</div>
+      <div class="confirm" @click="onConfirm">完成</div>
     </div>
   </div>
 </template>
@@ -22,11 +22,13 @@ export default {
     }
   },
   data() {
-    return {}
+    return {
+      cropper: null
+    }
   },
   mounted() {
     const image = this.$refs.img
-    const cropper = new Cropper(image, {
+    this.cropper = new Cropper(image, {
       viewMode: 1, // 限制裁剪框不超过画布的大小
       dragMode: 'move', // 移动画布
       aspectRatio: 1, // 纵横比
@@ -36,9 +38,17 @@ export default {
       background: false, // 显示容器的网格背景。
       movable: true // 启用以移动图像
     })
-    console.log(cropper)
   },
-  methods: {}
+  methods: {
+    onConfirm() {
+      // 如果是基于服务端的裁切，则使用：getData 方法，该方法得到裁切的区域参数。
+      // console.log(this.cropper.getData())
+      // 如果是纯客户端的图片裁切，则使用：getCroppedCanvas 方法，该方法得到裁切之后的图片对象（类似于URL.createObjectURL 方法得到的文件对象）。
+      this.cropper.getCroppedCanvas().toBlob((blob) => {
+        console.log(blob)
+      })
+    }
+  }
 }
 </script>
 

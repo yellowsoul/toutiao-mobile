@@ -1,5 +1,11 @@
 <template>
-  <img class="img" :src="img" />
+  <div class="update-photo">
+    <img class="img" :src="img" />
+    <div class="toolbar">
+      <div class="cancel" @click="$emit('close')">取消</div>
+      <div class="confirm">完成</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -18,7 +24,28 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+.update-photo {
+  background-color: #000;
+  height: 100%;
+  .toolbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    .cancel, .confirm {
+      width: 90px;
+      height: 90px;
+      font-size: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color:#fff;
+    }
+  }
+}
 .img {
   max-width: 100%;
 }

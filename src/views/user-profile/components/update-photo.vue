@@ -27,16 +27,14 @@ export default {
   mounted() {
     const image = this.$refs.img
     const cropper = new Cropper(image, {
-      aspectRatio: 16 / 9,
-      crop(event) {
-        console.log(event.detail.x)
-        console.log(event.detail.y)
-        console.log(event.detail.width)
-        console.log(event.detail.height)
-        console.log(event.detail.rotate)
-        console.log(event.detail.scaleX)
-        console.log(event.detail.scaleY)
-      }
+      viewMode: 1, // 限制裁剪框不超过画布的大小
+      dragMode: 'move', // 移动画布
+      aspectRatio: 1, // 纵横比
+      autoCropArea: 1, // 自动裁剪区域
+      cropBoxMovable: false, // 裁剪框是否可移动
+      cropBoxResizable: false, // 裁剪框是否可调整大小
+      background: false, // 显示容器的网格背景。
+      movable: true // 启用以移动图像
     })
     console.log(cropper)
   },

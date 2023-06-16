@@ -93,3 +93,14 @@ export const updateUserProfile = data => {
     data
   })
 }
+
+/**
+ * 更新用户照片资料
+ */
+export const updateUserPhoto = data => {
+  return request({
+    method: 'PATCH',
+    url: '/app/v1_0/user/photo',
+    data
+  })
+}

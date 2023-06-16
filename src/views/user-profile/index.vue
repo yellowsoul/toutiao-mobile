@@ -9,7 +9,13 @@
     ></van-nav-bar>
     <!-- /导航栏 -->
 
-    <input type="file" hidden ref="file" @change="onFileChange" />
+    <input
+      type="file"
+      hidden
+      ref="file"
+      accept="image/*"
+      @change="onFileChange"
+    />
 
     <!-- 个人信息 -->
     <van-cell title="头像" is-link>
@@ -80,7 +86,12 @@
       position="bottom"
       style="height: 100%"
     >
-      <update-photo :img="img" @close="isUpdatePhotoShow = false" />
+      <update-photo
+        v-if="isUpdatePhotoShow"
+        :img="img"
+        @close="isUpdatePhotoShow = false"
+        @update-photo="user.photo = $event"
+      />
     </van-popup>
     <!-- /编辑头像 -->
   </div>

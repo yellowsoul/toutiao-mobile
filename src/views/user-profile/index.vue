@@ -9,12 +9,20 @@
     ></van-nav-bar>
     <!-- /导航栏 -->
 
+    <input
+      type="file"
+      hidden
+      ref="file"
+      @change="onFileChange"
+    >
+
     <!-- 个人信息 -->
     <van-cell title="头像" is-link>
       <van-image
         class="avatar"
         round
         :src="user.photo"
+        @click="$refs.file.click()"
       />
     </van-cell>
     <van-cell
@@ -110,6 +118,14 @@ export default {
       } catch (err) {
         this.$toast('数据获取失败')
       }
+    },
+
+    onFileChange() {
+      // 获取文件对象
+      const file = this.$refs.file.files[0]
+      // 基于文件对象获取 blob 数据
+      const data = window.URL.createObjectURL(file)
+      console.log(data)
     }
   }
 }

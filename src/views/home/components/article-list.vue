@@ -1,5 +1,5 @@
 <template>
-  <div class="article-list">
+  <div class="article-list" ref="article-list">
     <!--
       List 列表组件：瀑布流滚动加载，用于展示长列表。
 
@@ -52,6 +52,8 @@
 <script>
 import { getArticles } from '@/api/article'
 import ArticleItem from '@/components/article-item'
+import { debounce } from 'lodash'
+
 // const nowTime = new Date();
 // const lastWeekTime = nowTime.setDate(nowTime.getDate() - 1000);
 export default {
@@ -73,9 +75,25 @@ export default {
       timestamp: null, // 请求获取下一页数据的时间戳
       error: false, // 控制列表加载失败的提示状态
       isreFreshLoading: false, // 控制下拉刷新的 loading 状态
-      refreshSuccessText: '刷新成功' // 下拉刷新成功提示文本
+      refreshSuccessText: '刷新成功', // 下拉刷新成功提示文本
+      scrollTop: 0 // 列表滚动到顶部的距离
     }
   },
+  mounted() {
+    const articleList = this.$refs['article-list']
+    articleList.onScroll = debounce(() => {
+      console.log('onscroll')
+      this.scrollTop = articleList.scrollTop
+    }, 50)
+  },
+  activated() {
+    // console.log('从缓存中被激活')
+    // 把记录的到顶部的距离重新设置回去
+    this.$refs['article-list'].scrollTop = this.scrollTop
+  },
+  // deactivated() {
+  //   console.log('组件失去活动了')
+  // },
   methods: {
     async onLoad() {
       try {

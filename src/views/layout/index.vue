@@ -1,7 +1,9 @@
 <template>
   <div class="layout-container">
-    <!-- 子路由出口 -->
-    <router-view />
+    <!-- layout 的子路由出口，或者说是二级路由 -->
+    <keep-alive>
+      <router-view />
+    </keep-alive>
     <!-- /子路由出口 -->
 
     <!-- 标签导航栏 -->

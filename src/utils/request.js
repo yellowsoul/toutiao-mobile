@@ -4,6 +4,7 @@
 import axios from 'axios'
 import store from '@/store'
 import JSONBig from 'json-bigint'
+import { Toast } from 'vant'
 
 /*
 const jsonStr = '{ "art_id": 1245953273786007552 }'
@@ -60,6 +61,37 @@ request.interceptors.request.use(function (config) {
   // 如果请求出错了(还没有发出去)会进入这里
   return Promise.reject(error)
 })
+
 // 响应拦截器
+// Add a response interceptor
+request.interceptors.response.use(
+  // 在2xx范围内的任何状态代码都会触发此函数，这里主要用于处理响应数据
+  response => {
+    return response
+  },
+  // 任何超出2xx范围的状态码都会触发此函数，这里主要用于处理响应错误
+  error => {
+    const { status } = error.response
+    if (status === 400) {
+      // 客户端请求参数错误
+      Toast.fail('客户端请求参数异常')
+    } else if (status === 401) {
+      // 未授权 token 无效
+    } else if (status === 403) { // 没有权限
+    } else if (status === 404) { // 资源不存在
+      Toast.fail({
+        message: '请求资源不存在',
+        forbidClick: true
+      })
+    } else if (status >= 500) { // 服务端异常
+      Toast.fail({
+        message: '服务端异常，请稍后重试',
+        forbidClick: true
+      })
+    }
+
+    // 将未处理的异常往外抛
+    return Promise.reject(error)
+  })
 
 export default request

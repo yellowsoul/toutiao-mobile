@@ -59,7 +59,12 @@
     <!-- /宫格导航 -->
 
     <van-cell title="消息通知" is-link></van-cell>
-    <van-cell class="mb-9" title="小智同学" is-link></van-cell>
+    <van-cell
+      class="mb-9"
+      title="小智同学"
+      is-link
+      to="/user/chat"
+    ></van-cell>
     <van-cell
       v-if="user"
       class="logout-cell"

@@ -107,7 +107,6 @@ request.interceptors.response.use(
         // error.config 是本次请求的相关配置信息对象
         // 这里使用 request 发请求,它会走自己的拦截器
         // 它的请求拦截器中通过 store 容器访问 token 数据
-        console.log(error.config)
         return request(error.config)
       } catch (err) {
         // 刷新 token 都失败了,直接跳转登录页
@@ -131,6 +130,14 @@ request.interceptors.response.use(
   })
 
 function redirectLogin() {
-  router.replace('/login')
+  router.replace({
+    name: 'login',
+    // 传递查询参数，查询参数会以 ？ 作为分隔符放在 url 后面
+    query: {
+      // 数据名是自己起的
+      // router.currentRoute 和我们在组件中获取的 this.$route 是一个东西
+      redirect: router.currentRoute.fullPath
+    }
+  })
 }
 export default request

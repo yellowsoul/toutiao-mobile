@@ -8,11 +8,7 @@
           <span class="name">{{ userInfo.name }}</span>
         </div>
         <div class="right">
-          <van-button
-            size="mini"
-            round
-            to="/user/profile"
-          >编辑资料</van-button>
+          <van-button size="mini" round to="/user/profile">编辑资料</van-button>
         </div>
       </div>
       <div class="data-stats">
@@ -38,12 +34,17 @@
 
     <!-- 未登录头部 -->
     <div v-else class="header not-login">
-      <div class="login-btn" @click="$router.push({
-        name: 'login',
-        query: {
-          redirect: '/profile'
-        }
-      })">
+      <div
+        class="login-btn"
+        @click="
+          $router.push({
+            name: 'login',
+            query: {
+              redirect: '/profile'
+            }
+          })
+        "
+      >
         <img class="mobile-img" src="~@/assets/mobile.png" alt="" />
         <span class="text">登录 / 注册</span>
       </div>
@@ -64,12 +65,7 @@
     <!-- /宫格导航 -->
 
     <van-cell title="消息通知" is-link></van-cell>
-    <van-cell
-      class="mb-9"
-      title="小智同学"
-      is-link
-      to="/user/chat"
-    ></van-cell>
+    <van-cell class="mb-9" title="小智同学" is-link to="/user/chat"></van-cell>
     <van-cell
       v-if="user"
       class="logout-cell"
